@@ -18,14 +18,12 @@ include $(DEVKITARM)/ds_rules
 TARGET		:=	$(shell basename $(CURDIR))
 BUILD		:=	build
 SOURCES		:=	Ikachan
-SOURCEARM7  :=  srcarm7
-DATA		:=	data  
+SOURCEARM7  :=  arm7
 INCLUDES	:=	include
-SPRITES		:=  sprites
 
 GAME_TITLE := Ikachan
-GAME_SUBTITLE1 := github.com/tilderain/IkachanDS
-GAME_SUBTITLE2 := 
+GAME_SUBTITLE1 := Pixel
+GAME_SUBTITLE2 := github.com/awkitsune/IkachanDS
 GAME_ICON := $(CURDIR)/../icon.bmp
 
 
@@ -161,5 +159,9 @@ $(SOURCEARM7)/CSE2-arm7.elf:
 endif
 #---------------------------------------------------------------------------------------
 %.nds: %.elf
-	$(SILENTCMD)ndstool -h 0x200 -c $@ -9 $< -7 $(TOPDIRREAL)/$(SOURCEARM7)/Ikachan-arm7.elf -b $(GAME_ICON) "$(GAME_TITLE);$(GAME_SUBTITLE1);$(GAME_SUBTITLE2)" $(_ADDFILES)
+	$(SILENTCMD)ndstool -c $@ -9 $< -7 $(TOPDIRREAL)/$(SOURCEARM7)/Ikachan-arm7.elf \
+	-b $(GAME_ICON) "$(GAME_TITLE);$(GAME_SUBTITLE1);$(GAME_SUBTITLE2)" \
+	-g IKAI 01 "IKACHAN" -z 80040000 -u 00030004 $(_ADDFILES)
+	cp $(OUTPUT).nds $(OUTPUT).dsi
+
 	echo built ... $(notdir $@)
