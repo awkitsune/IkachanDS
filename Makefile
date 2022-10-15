@@ -20,6 +20,7 @@ BUILD		:=	build
 SOURCES		:=	Ikachan
 SOURCEARM7  :=  arm7
 INCLUDES	:=	include
+VERSION		:=	0.2.0
 
 GAME_TITLE := Ikachan
 GAME_SUBTITLE1 := Pixel
@@ -121,7 +122,7 @@ $(BUILD):
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -f $(BUILD)/* $(TARGET).elf $(TARGET).nds
+	@rm -f $(BUILD)/* $(TARGET).elf $(TARGET).nds $(TARGET).dsi
 	@make -C $(SOURCEARM7) clean
 
 
@@ -159,9 +160,12 @@ $(SOURCEARM7)/CSE2-arm7.elf:
 endif
 #---------------------------------------------------------------------------------------
 %.nds: %.elf
-	$(SILENTCMD)ndstool -c $@ -9 $< -7 $(TOPDIRREAL)/$(SOURCEARM7)/Ikachan-arm7.elf \
+	$(SILENTCMD)ndstool -c $(OUTPUT).nds -9 $< -7 $(TOPDIRREAL)/$(SOURCEARM7)/Ikachan-arm7.elf \
 	-b $(GAME_ICON) "$(GAME_TITLE);$(GAME_SUBTITLE1);$(GAME_SUBTITLE2)" \
-	-g IKAI 01 "IKACHAN" -z 80040000 -u 00030004 $(_ADDFILES)
-	cp $(OUTPUT).nds $(OUTPUT).dsi
+	$(_ADDFILES)
+
+	$(SILENTCMD)ndstool -c $(OUTPUT).dsi -9 $< -7 $(TOPDIRREAL)/$(SOURCEARM7)/Ikachan-arm7.elf \
+	-b $(GAME_ICON) "$(GAME_TITLE);$(GAME_SUBTITLE1);$(GAME_SUBTITLE2)" \
+	-g IKAI 01 "IKACHAN" $(VERSION) -z 80040000 -u 00030004 $(_ADDFILES)
 
 	echo built ... $(notdir $@)
