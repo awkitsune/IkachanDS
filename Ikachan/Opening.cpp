@@ -22,8 +22,8 @@ void PutOpening(OPENING *op)
 	//Draw main title elements
 	CortBox(&grcFull, 0xFFFFFF);
 	PutBitmap3(&grcFull, (SURFACE_WIDTH / 2) - 95, op->title_y, &rcTitle, SURFACE_ID_OPENING);
-	PutBitmap3(&grcFull, (SURFACE_WIDTH / 2) - 28, (SURFACE_HEIGHT / 2) + 17, &rcCrab, SURFACE_ID_OPENING);
-	PutBitmap3(&grcFull, op->pixel_x, SURFACE_HEIGHT - 35, &rcPixel, SURFACE_ID_OPENING);
+	PutBitmap3(&grcFull, (SURFACE_WIDTH / 2) - 28, (SURFACE_HEIGHT / 2) + 6, &rcCrab, SURFACE_ID_OPENING);
+	PutBitmap3(&grcFull, op->pixel_x, SURFACE_HEIGHT - 25, &rcPixel, SURFACE_ID_OPENING);
 	
 	for (int i = 0; i < ((SURFACE_HEIGHT + 63) / 64 + 1); ++i)
 	{
@@ -33,7 +33,7 @@ void PutOpening(OPENING *op)
 	
 	//Move border and logo
 	op->border_y++;
-	if (op->title_y < 45)
+	if (op->title_y < 25)
 		op->title_y++;
 	if (op->border_y >= 0)
 		op->border_y -= 64;
@@ -49,7 +49,7 @@ void PutOpening(OPENING *op)
 	{
 		//Draw 'Press Z' text once that's stopped moving
 		if (op->border_y / 32 % 2)
-			PutBitmap3(&grcFull, (SURFACE_WIDTH / 2) - 32, (SURFACE_HEIGHT / 2) + 6, &rcPressZ, SURFACE_ID_OPENING);
+			PutBitmap3(&grcFull, (SURFACE_WIDTH / 2) - 32, (SURFACE_HEIGHT / 2) - 6, &rcPressZ, SURFACE_ID_OPENING);
 	}
 	
 }
